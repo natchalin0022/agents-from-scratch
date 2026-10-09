@@ -11,13 +11,18 @@ def write_email(to: str, subject: str, content: str) -> str:
     # Placeholder response - in real app would send email
     return f"Email sent to {to} with subject '{subject}' and content: {content}"
 
-llm = init_chat_model("openai:gpt-4.1", temperature=0)
-model_with_tools = llm.bind_tools([write_email], tool_choice="any")
+llm = init_chat_model("claude-haiku-4-5", temperature=0)
+model_with_tools = llm.bind_tools([write_email])
+
+SYSTEM = ("Only call write_email when the user explicitly asks you to draft an email. "
+          "If they ask for others (e.g. send, regarding information), DO NOT use any tool.")
 
 def call_llm(state: MessagesState) -> MessagesState:
     """Run LLM"""
 
-    output = model_with_tools.invoke(state["messages"])
+    output = model_with_tools.invoke(
+        [{"role": "system", "content": SYSTEM}] + state["messages"]
+    )
     return {"messages": [output]}
 
 def run_tool(state: MessagesState) -> MessagesState:
