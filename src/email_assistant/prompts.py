@@ -222,6 +222,7 @@ Emails that are worth responding to:
 - Personal reminders related to family (wife / daughter)
 - Personal reminder related to self-care (doctor appointments, etc)
 - Job applying emails from companies or social medias (e.g. LinkedIn, Jobsdb, etc.)
+- a meeting request from a client or a known contact should get respond, even when the topic is personal or financial
 """
 
 MEMORY_UPDATE_INSTRUCTIONS = """
